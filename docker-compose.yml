@@ -26,11 +26,7 @@ services:
       - 'prestashop_data:/bitnami/prestashop'
     depends_on:
       - mariadb
-  fbcp:
-    image: 'balenablocks/fbcp:1.0.0'
-    privileged: true
-    restart: unless-stoped
-  hostname:
+   hostname:
     image: 'balenablocks/hostname:latest'
     restart: unless-stoped
     network_mode: host
