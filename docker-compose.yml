@@ -26,6 +26,30 @@ services:
       - 'prestashop_data:/bitnami/prestashop'
     depends_on:
       - mariadb
+  fbcp:
+    image: 'balenablocks/fbcp:1.0.0'
+    privileged: true
+    restart: unless-stoped
+  hostname:
+    image: 'balenablocks/hostname:latest'
+    restart: unless-stoped
+    network_mode: host
+    labels:
+      io.balena.features.supervisor-api: '1'
+    environment:
+      SET_HOSTNAME: prestashop
+  hetzner-ddns:
+    image: 'kutzilla/hetzner-ddns:latest'
+    container_name: hetzner-ddns
+    network_mode: host
+    privileged: true
+    environment:
+      XDEBUG_ENABLED: ''
+      RECORD_TYPE: A
+      API_TOKEN: UZgSPSuRL4Uvz3be2UdST5y2XWlUhOec
+      ZONE_NAME: mioga.eu
+      RECORDE_NAME: dev
+    restart: always      
 volumes:
   mariadb_data:
     driver: local
